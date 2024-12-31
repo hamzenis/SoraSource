@@ -5,7 +5,7 @@
         "name": "sobet",
         "website": "https://google.com"
     },
-    "iconURL": "https://raw.githubusercontent.com/bshar1865/MFS/refs/heads/main/assets/anivibe.jpg",
+    "iconURL": "https://raw.githubusercontent.com/hamzenis/SoraSource/refs/heads/main/assests/aniworld.png",
     "stream": "HLS2",
     "language": "DE",
     "extractor": "dub-sub",
@@ -23,9 +23,9 @@
                 "href": "a"
             },
             "featured": {
-                "url": "https://anivibe.net/newest",
-                "documentSelector": "div.listupd article",
-                "title": "div.tt span",
+                "url": "https://aniworld.to/beliebte-animes",
+                "documentSelector": "div.seriesListContainer row col-md-15 col-sm-3 col-xs-6",
+                "title": "h3",
                 "image": {
                     "url": "img",
                     "attribute": "src"
