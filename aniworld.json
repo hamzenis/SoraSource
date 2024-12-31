@@ -1,0 +1,52 @@
+{
+    "name": "AniWorld",
+    "version": "1.0.0",
+    "author": {
+        "name": "sobet",
+        "website": "https://google.com"
+    },
+    "iconURL": "https://raw.githubusercontent.com/bshar1865/MFS/refs/heads/main/assets/anivibe.jpg",
+    "stream": "HLS2",
+    "language": "DE",
+    "extractor": "dub-sub",
+    "module": [
+        {
+            "search": {
+                "url": "https://aniworld.to/search",
+                "parameter": "q",
+                "documentSelector": "ul.searchResults li",
+                "title": "strong em",
+                "image": {
+                    "url": "img",
+                    "attribute": "src"
+                },
+                "href": "a"
+            },
+            "featured": {
+                "url": "https://anivibe.net/newest",
+                "documentSelector": "div.listupd article",
+                "title": "div.tt span",
+                "image": {
+                    "url": "img",
+                    "attribute": "src"
+                },
+                "href": "a"
+            },
+            "details": {
+                "baseURL": "https://aniworld.to",
+                "aliases": {
+                    "selector": "div.post-title h1",
+                    "attribute": "text"
+                },
+                "synopsis": "div.entry-content",
+                "airdate": "div.post-meta span:contains(Aired) + span",
+                "stars": "div.post-meta span:contains(Rating) + span"
+            },
+            "episodes": {
+                "selector": "div.eplister ul li a",
+                "order": "reversed",
+                "pattern": ""
+            }
+        }
+    ]
+}
