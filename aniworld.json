@@ -12,10 +12,10 @@
     "module": [
         {
             "search": {
-                "url": "https://aniworld.to/animes",
-                "parameter": "",
-                "documentSelector": "div.genre",
-                "title": "a",
+                "url": "https://aniworld.to/search",
+                "parameter": "q",
+                "documentSelector": "div.container ul li",
+                "title": "strong",
                 "image": {
                     "url": "img",
                     "attribute": "src"
