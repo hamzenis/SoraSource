@@ -1,21 +1,22 @@
 {
     "name": "AniWorld",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": {
         "name": "sobet",
         "website": "https://google.com"
     },
     "iconURL": "https://raw.githubusercontent.com/hamzenis/SoraSource/refs/heads/main/assests/aniworld.png",
-    "stream": "HLS2",
+    "stream": "HLS",
     "language": "DE",
-    "extractor": "dub-sub",
+    "extractor": "voe",
     "module": [
         {
             "search": {
-                "url": "https://aniworld.to/search",
-                "parameter": "q",
-                "documentSelector": "div.container ul li",
-                "title": "strong",
+                "url": "https://aniworld.to/animes-alphabet",
+                "parameter": "",
+                "documentSelector": "div.genre ul li",
+                "title": "a",
+                "searchable": false,
                 "image": {
                     "url": "img",
                     "attribute": "src"
@@ -24,7 +25,7 @@
             },
             "featured": {
                 "url": "https://aniworld.to/beliebte-animes",
-                "documentSelector": "div.seriesListContainer row col-md-15 col-sm-3 col-xs-6",
+                "documentSelector": "div.seriesListContainer col-md-15 col-sm-3 col-xs-6 a h3",
                 "title": "h3",
                 "image": {
                     "url": "img",
@@ -34,17 +35,18 @@
             },
             "details": {
                 "baseURL": "https://aniworld.to",
+                "pageRedirects": true,
                 "aliases": {
                     "selector": "div.post-title h1",
                     "attribute": "text"
                 },
-                "synopsis": "div.entry-content",
-                "airdate": "div.post-meta span:contains(Aired) + span",
-                "stars": "div.post-meta span:contains(Rating) + span"
+                "synopsis": "p.seri_des",
+                "airdate": "div.series-title small span a",
+                "stars": "div.starRatingResult strong span"
             },
             "episodes": {
-                "selector": "div.eplister ul li a",
-                "order": "reversed",
+                "selector": "table.seasonEpisodesList tbody tr td.seasonEpisodeTitle a",
+                "order": "",
                 "pattern": ""
             }
         }
