@@ -2,11 +2,10 @@ class AniWorld {
     constructor() {
         this.baseUrl = 'https://aniworld.to';
         this.searchUrl = 'https://aniworld.to/animes-alphabet';
-        this.corsProxy = 'https://cors-anywhere.herokuapp.com/';
     }
     
     async getSearchResults(search) {
-        const response = await axios.get(`${this.corsProxy}${this.searchUrl}`);
+        const response = await axios.get(`${this.searchUrl}`);
         const parser = new DOMParser();
         const doc = parser.parseFromString(response.data, 'text/html');
         const results = [];
