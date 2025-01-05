@@ -5,31 +5,33 @@ class AniWorld {
         this.corsProxy = 'https://cors-proxy.fringe.zone/';
     }
     
-    async getSearchResults(search) {
-        try {
-            const response = await fetch(`${this.corsProxy}${this.searchUrl}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const text = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(text, 'text/html');
-            const results = [];
-            const elements = doc.querySelectorAll('div.genre ul li a');
-            elements.forEach(element => {
-                const title = element.textContent.trim();
-                const link = element.getAttribute('href');
-                if (!search || title.toLowerCase().includes(search.toLowerCase())) {
-                    results.push({ title: title, link: `${this.baseUrl}${link}` });
+    getSearchResults(search) {
+        return fetch(`${this.corsProxy}${this.searchUrl}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
+                return response.text();
+            })
+            .then(text => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+                const results = [];
+                const elements = doc.querySelectorAll('div.genre ul li a');
+                elements.forEach(element => {
+                    const title = element.textContent.trim();
+                    const link = element.getAttribute('href');
+                    if (!search || title.toLowerCase().includes(search.toLowerCase())) {
+                        results.push({ title: title, link: `${this.baseUrl}${link}` });
+                    }
+                });
+                return JSON.stringify(results); // Return results as a JSON string
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                return JSON.stringify([]); // Return an empty array as a JSON string
             });
-            return JSON.stringify(results); // Return results as a JSON string
-        } catch (error) {
-            console.error('Fetch error:', error);
-            return JSON.stringify([]); // Return an empty array as a JSON string
-        }
     }
-    
 }
 
 // Initialize AniWorld instance
