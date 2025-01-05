@@ -137,3 +137,10 @@ class AniWorld {
     }
 
 }
+
+
+// Expose the getSearchResults function to the global scope
+(global as any).getSearchResults = async (search: string) => {
+    const aniWorld = new AniWorld();
+    return await aniWorld.getSearchResults(search);
+};

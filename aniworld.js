@@ -224,3 +224,15 @@ var AniWorld = /** @class */ (function () {
     };
     return AniWorld;
 }());
+// Expose the getSearchResults function to the global scope
+global.getSearchResults = function (search) { return __awaiter(void 0, void 0, void 0, function () {
+    var aniWorld;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                aniWorld = new AniWorld();
+                return [4 /*yield*/, aniWorld.getSearchResults(search)];
+            case 1: return [2 /*return*/, _a.sent()];
+        }
+    });
+}); };
