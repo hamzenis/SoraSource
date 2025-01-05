@@ -137,13 +137,3 @@ class AniWorld {
     }
 
 }
-
-(async function main() {
-    const aniworld = new AniWorld();
-    const results = await aniworld.getSearchResults("Bleach");
-    console.log(results);
-
-    const allEpisodes = await aniworld.getAllSeasonsEpisodes(results[0].link);
-    const linksEpisode1 = await aniworld.getEpisodeVideoLinks(allEpisodes[6].link);
-    console.log(linksEpisode1);
-})();

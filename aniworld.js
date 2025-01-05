@@ -224,26 +224,3 @@ var AniWorld = /** @class */ (function () {
     };
     return AniWorld;
 }());
-(function main() {
-    return __awaiter(this, void 0, void 0, function () {
-        var aniworld, results, allEpisodes, linksEpisode1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    aniworld = new AniWorld();
-                    return [4 /*yield*/, aniworld.getSearchResults("Bleach")];
-                case 1:
-                    results = _a.sent();
-                    console.log(results);
-                    return [4 /*yield*/, aniworld.getAllSeasonsEpisodes(results[0].link)];
-                case 2:
-                    allEpisodes = _a.sent();
-                    return [4 /*yield*/, aniworld.getEpisodeVideoLinks(allEpisodes[6].link)];
-                case 3:
-                    linksEpisode1 = _a.sent();
-                    console.log(linksEpisode1);
-                    return [2 /*return*/];
-            }
-        });
-    });
-})();
