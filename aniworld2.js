@@ -2,15 +2,18 @@ class AniWorld {
     constructor() {
         this.baseUrl = 'https://aniworld.to';
         this.searchUrl = 'https://aniworld.to/animes-alphabet';
+        this.corsProxy = 'https://cors-anywhere.herokuapp.com/';
     }
     
     async getSearchResults(search) {
-        const response = await axios.get(this.searchUrl);
-        const $ = cheerio.load(response.data);
+        const response = await axios.get(`${this.corsProxy}${this.searchUrl}`);
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(response.data, 'text/html');
         const results = [];
-        $('div.genre ul li a').each((_, element) => {
-            const title = $(element).text().trim();
-            const link = $(element).attr('href');
+        const elements = doc.querySelectorAll('div.genre ul li a');
+        elements.forEach(element => {
+            const title = element.textContent.trim();
+            const link = element.getAttribute('href');
             if (!search || title.toLowerCase().includes(search.toLowerCase())) {
                 results.push({ title: title, link: `${this.baseUrl}${link}` });
             }
