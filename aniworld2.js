@@ -23,12 +23,13 @@ class AniWorld {
                     results.push({ title: title, link: `${this.baseUrl}${link}` });
                 }
             });
-            return results;
+            return JSON.stringify(results); // Return results as a JSON string
         } catch (error) {
             console.error('Fetch error:', error);
-            return [];
+            return JSON.stringify([]); // Return an empty array as a JSON string
         }
     }
+    
 }
 
 // Initialize AniWorld instance
