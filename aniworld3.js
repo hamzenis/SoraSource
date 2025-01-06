@@ -33,7 +33,7 @@ class AniWorld {
             return JSON.stringify(results);
         } catch (error) {
             console.error('Fetch error:', error);
-            return JSON.stringify([]);
+            return JSON.stringify([{ title: 'Error', link: '' }]);
         }
     }
 }
