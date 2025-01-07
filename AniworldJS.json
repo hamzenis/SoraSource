@@ -1,0 +1,12 @@
+{
+    "sourceName": "AniWorld JS",
+    "version": "0.1.0",
+    "iconUrl": "https://raw.githubusercontent.com/hamzenis/SoraSource/refs/heads/main/assests/aniworld.png",
+    "author": "Hamzo",
+    "description": "This is a sample scraping module.",
+    "scriptUrl": "https://raw.githubusercontent.com/hamzenis/SoraSource/refs/heads/main/app.js",
+    "language": "German",
+    "baseUrl": "https://aniworld.to",
+    "searchBaseUrl": "https://aniworld.to/animes-alphabet",
+    "useJsSearch": true
+}
