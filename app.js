@@ -51,8 +51,8 @@ async function getEpisodesList(url){
         // Extract sub pages for each season
         const seasonLinks = await getSeasonLinks(text);
         for (const seasonLink of seasonLinks) {
-            const seasonEpisodes = await getEpisodesList(`${baseUrl}${seasonLink}`);
-            matches.push(...JSON.parse(seasonEpisodes));
+            const seasonEpisodes = await fetchSeasonEpisodes(`${baseUrl}${seasonLink}`);
+            matches.push(...seasonEpisodes);
         }
 
         console.log(`Results: ${JSON.stringify(matches)}`);
@@ -78,4 +78,29 @@ async function getSeasonLinks(html) {
         }
     }
     return seasonLinks;
+}
+
+async function fetchSeasonEpisodes(url) {
+    try {
+        const fetchUrl = `${url}`;
+        console.log(`Fetching URL: ${fetchUrl}`);
+        
+        const text = await fetch(fetchUrl);
+        console.log('Received response from fetch');
+
+        const regex = /<a[^>]*href="([^"]+)"[^>]*>.*?<strong>([^<]+)<\/strong>.*?<span>([^<]+)<\/span>.*?<\/a>/g;
+        const matches = [];
+        let match;
+
+        while ((match = regex.exec(text)) !== null) {
+            const [_, link, title, spanText] = match;
+            matches.push({ title: `${title.trim()} - ${spanText.trim()}`, link: `${baseUrl}${link}` });
+        }
+
+        return matches;
+
+    } catch (error) {
+        console.log('Fetch error:', error);
+        return [{ title: 'Error', link: '' }];
+    }
 }
