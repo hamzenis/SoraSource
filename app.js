@@ -1,15 +1,13 @@
 const baseUrl = 'https://aniworld.to';
 const searchUrl = 'https://aniworld.to/animes-alphabet';
 
+
+// Fetch function for searching with a keyword
+// This function is relevant for the swift code
 async function getSearchResults(search) {
     try {
         const fetchUrl = `${searchUrl}`;
-        console.log(`Fetching URL: ${fetchUrl}`);
-        
         const text = await fetch(fetchUrl);
-        console.log('Received response from fetch');
-
-        // Basic text parsing without using DOMParser
         const regex = /<a[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g;
         const matches = [];
         let match;
@@ -20,50 +18,38 @@ async function getSearchResults(search) {
                 matches.push({ title: title.trim(), link: `${baseUrl}${link}` });
             }
         }
-
-        console.log(`Results: ${JSON.stringify(matches)}`);
         return JSON.stringify(matches);
-
     } catch (error) {
         console.log('Fetch error:', error);
         return JSON.stringify([{ title: 'Error', link: '' }]);
     }
 }
 
+// Fetch function for getting the list of episodes
+// This function is relevant for the swift code
 async function getEpisodesList(url){
     try {
         const fetchUrl = `${url}`;
-        console.log(`Fetching URL: ${fetchUrl}`);
-        
         const text = await fetch(fetchUrl);
-        console.log('Received response from fetch');
 
-        // Updated regex to capture text inside <span> as well
-        const regex = /<a[^>]*href="([^"]+)"[^>]*>.*?<strong>([^<]+)<\/strong>.*?<span>([^<]+)<\/span>.*?<\/a>/g;
-        const matches = [];
-        let match;
-
-        while ((match = regex.exec(text)) !== null) {
-            const [_, link, title, spanText] = match;
-            matches.push({ title: `${title.trim()} - ${spanText.trim()}`, link: `${baseUrl}${link}` });
-        }
-
-        // Extract sub pages for each season
+        const finishedList = [];
         const seasonLinks = await getSeasonLinks(text);
+        
         for (const seasonLink of seasonLinks) {
             const seasonEpisodes = await fetchSeasonEpisodes(`${baseUrl}${seasonLink}`);
-            matches.push(...seasonEpisodes);
+            finishedList.push(...seasonEpisodes);
         }
 
-        console.log(`Results: ${JSON.stringify(matches)}`);
-        return JSON.stringify(matches);
+        return JSON.stringify(finishedList);
 
     } catch (error) {
         console.log('Fetch error:', error);
-        return JSON.stringify([{ title: 'Error', link: '' }]);
+        return JSON.stringify([{ title: 'Error1', link: '' }]);
     }
 }
 
+// Helper function to get the list of seasons
+// Site specific structure
 async function getSeasonLinks(html) {
     const seasonLinks = [];
     const seasonRegex = /<div class="hosterSiteDirectNav" id="stream">.*?<ul>(.*?)<\/ul>/s;
@@ -80,15 +66,16 @@ async function getSeasonLinks(html) {
     return seasonLinks;
 }
 
+// Helper function to fetch episodes for a season
+// Site specific structure
 async function fetchSeasonEpisodes(url) {
     try {
         const fetchUrl = `${url}`;
-        console.log(`Fetching URL: ${fetchUrl}`);
-        
         const text = await fetch(fetchUrl);
-        console.log('Received response from fetch');
 
-        const regex = /<a[^>]*href="([^"]+)"[^>]*>.*?<strong>([^<]+)<\/strong>.*?<span>([^<]+)<\/span>.*?<\/a>/g;
+        // Updated regex to allow empty <strong> content
+        const regex = /<td class="seasonEpisodeTitle">\s*<a[^>]*href="([^"]+)"[^>]*>.*?<strong>([^<]*)<\/strong>.*?<span>([^<]+)<\/span>.*?<\/a>/g;
+
         const matches = [];
         let match;
 
@@ -101,6 +88,6 @@ async function fetchSeasonEpisodes(url) {
 
     } catch (error) {
         console.log('Fetch error:', error);
-        return [{ title: 'Error', link: '' }];
+        return [{ title: 'Error2', link: '' }];
     }
 }
