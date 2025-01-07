@@ -48,6 +48,20 @@ async function getEpisodesList(url){
             matches.push({ title: `${title.trim()} - ${spanText.trim()}`, link: `${baseUrl}${link}` });
         }
 
+        // Extract sub pages for each season
+        const seasonRegex = /<div class="hosterSiteDirectNav" id="stream">.*?<ul>(.*?)<\/ul>/s;
+        const seasonMatch = seasonRegex.exec(text);
+        if (seasonMatch) {
+            const seasonList = seasonMatch[1];
+            const seasonLinkRegex = /<a[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g;
+            let seasonLinkMatch;
+            while ((seasonLinkMatch = seasonLinkRegex.exec(seasonList)) !== null) {
+                const [_, seasonLink, seasonTitle] = seasonLinkMatch;
+                const seasonEpisodes = await getEpisodesList(`${baseUrl}${seasonLink}`);
+                matches.push(...JSON.parse(seasonEpisodes));
+            }
+        }
+
         console.log(`Results: ${JSON.stringify(matches)}`);
         return JSON.stringify(matches);
 
