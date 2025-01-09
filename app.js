@@ -4,7 +4,7 @@ const searchUrl = 'https://aniworld.to/animes-alphabet';
 
 // Fetch function for searching with a keyword
 // This function is relevant for the swift code
-async function getSearchResults(search) {
+async function searchResults(search) {
     try {
         const fetchUrl = `${searchUrl}`;
         const text = await fetch(fetchUrl);
@@ -13,15 +13,15 @@ async function getSearchResults(search) {
         let match;
 
         while ((match = regex.exec(text)) !== null) {
-            const [_, link, title] = match;
+            const [_, href, title] = match;
             if (!search || title.toLowerCase().includes(search.toLowerCase())) {
-                matches.push({ title: title.trim(), link: `${baseUrl}${link}` });
+                matches.push({ title: title.trim(), href: `${baseUrl}${href}` });
             }
         }
         return JSON.stringify(matches);
     } catch (error) {
         console.log('Fetch error:', error);
-        return JSON.stringify([{ title: 'Error', link: '' }]);
+        return JSON.stringify([{ title: 'Error', href: '' }]);
     }
 }
 
