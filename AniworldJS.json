@@ -4,7 +4,7 @@
     "iconUrl": "https://raw.githubusercontent.com/hamzenis/SoraSource/refs/heads/main/assests/aniworld.png",
     "author": "Hamzo",
     "description": "This is a sample scraping module.",
-    "scriptUrl": "https://pastebin.com/raw/x3d93vT2",
+    "scriptUrl": "https://raw.githubusercontent.com/hamzenis/SoraSource/refs/heads/main/app.js",
     "language": "German",
     "baseUrl": "https://aniworld.to",
     "searchBaseUrl": "https://aniworld.to/animes-alphabet/%s",
